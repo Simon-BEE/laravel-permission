@@ -1,9 +1,9 @@
-<form method="POST" action="{{ $action }}">
+<form method="POST" action="{{ $action }}" class="inline-block">
     @csrf
     @method($method ?? 'POST')
         <button
             type="submit"
-            class="btn {{ $class ?? 'btn-teal' }}"
+            class="bg-gray-200 p-2 rounded inline-flex {{ $class ?? 'text-red-400 hover:text-red-600' }}"
         >
             {{ $slot }}
         </button>

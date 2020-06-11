@@ -52,12 +52,12 @@
                 </span>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium">
-                    <a href="#" class="bg-gray-200 p-2 rounded inline-flex text-indigo-600 hover:text-indigo-900 mr-2">
+                    <a href="{{ route('roles.edit', $role) }}" class="bg-gray-200 p-2 rounded inline-flex text-indigo-600 hover:text-indigo-900 mr-2">
                         <span class="text-lg mdi mdi-pencil-outline"></span>
                     </a>
-                    <a href="#" class="bg-gray-200 p-2 rounded inline-flex text-red-400 hover:text-red-600">
+                    <x-form.form-button action="{{ route('roles.destroy', $role) }}" method="DELETE">
                         <span class="text-lg mdi mdi-delete-outline"></span>
-                    </a>
+                    </x-form.form-button>
                 </td>
             </tr>
         @empty

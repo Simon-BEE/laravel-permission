@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRoleRequest extends FormRequest
+class StorePermissionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -34,9 +34,9 @@ class StoreRoleRequest extends FormRequest
                 'string',
                 'between:3,255',
             ],
-            'permissions' => [
+            'roles' => [
                 'nullable',
-                'exists:permissions,id',
+                'exists:roles,id',
             ],
         ];
     }

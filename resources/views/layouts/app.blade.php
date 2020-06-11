@@ -27,7 +27,10 @@
         </div>
     </header>
 
-    <main>
+    <main class="relative">
+        @if (session()->has('type'))
+            <x-alert type="{{ session('type') }}">{{ session()->has('message') ? session('message') : '' }}</x-alert>
+        @endif
         <div class="container mx-auto py-6 sm:px-6 lg:px-8 overflow-x-scroll md:overflow-x-hidden">
             <!-- Replace with your content -->
             <div class="px-4 py-6 sm:px-0">
@@ -39,6 +42,17 @@
     </main>
 
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.js"></script> --}}
+    <script>
+        const flashAlertElement = document.querySelector('.alert-flash');
+        if (flashAlertElement) {
+            setTimeout(() => {
+                flashAlertElement.style.transform = 'translateX(0)';
+            }, 1000);
+            setTimeout(() => {
+                flashAlertElement.style.transform = 'translateX(100%)';
+            }, 5000);
+        }
+    </script>
     @yield('extra-js')
 </div>
 </body>
