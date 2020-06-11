@@ -24,10 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // $user = User::all()->first();
-        // dd($user->removePermissionsTo('create-tasks', 'edit-tasks', 'edit-users'));
-        dd(auth()->user()->giveRolesTo('manager'));
-
         return view('home');
     }
 }

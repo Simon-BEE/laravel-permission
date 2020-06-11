@@ -14,12 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::view('/ui', 'ui.index');
+Auth::routes();
 Route::get('/', function () {
     return Auth::check() ? redirect()->route('home') : redirect()->route('login');
 });
 
-Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::view('/ui', 'ui.index');
+Route::group(['middleware' => ['role:admin']], function () {
+    Route::get('permissions', 'RolePermission\IndexController')->name('permissions.index');
+});
+
+

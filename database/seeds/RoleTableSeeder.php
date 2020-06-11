@@ -27,5 +27,12 @@ class RoleTableSeeder extends Seeder
             'name' => 'Assitant Manager',
         ]);
         $manager_role->permissions()->attach($manager_permission);
+
+        // Always at the end of seeder
+        $admin_role = Role::create([
+            'slug' => 'admin',
+            'name' => 'Administrator',
+        ]);
+        $admin_role->permissions()->attach(Permission::all());
     }
 }

@@ -16,9 +16,11 @@
                         <a href="{{ route('home') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700">
                             Home
                         </a>
-                        <a href="#" class="mx-1 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
+                        @role('admin')
+                        <a href="{{ route('permissions.index') }}" class="mx-1 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
                             Roles and Permissions
                         </a>
+                        @endrole
                         <a href="#" class="mx-1 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
                             Users
                         </a>
@@ -63,9 +65,11 @@
             <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700">
                Home
             </a>
-            <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 focus:text-white focus:outline-none focus:text-white focus:bg-gray-700">
-               Roles and Permissions
-            </a>
+            @role('admin')
+            <a href="{{ route('permissions.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 focus:text-white focus:outline-none focus:text-white focus:bg-gray-700">
+                Roles and Permissions
+             </a>
+            @endrole
             <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 focus:text-white focus:outline-none focus:text-white focus:bg-gray-700">
                Users
             </a>

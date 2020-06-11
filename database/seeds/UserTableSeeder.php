@@ -20,9 +20,19 @@ class UserTableSeeder extends Seeder
         $manager_role = Role::where('slug', 'manager')->first();
         $manager_perm = Permission::where('slug','edit-users')->first();
 
+        $admin_role = Role::where('slug', 'admin')->first();
+
         $developer = User::create([
-            'name' => 'Simon Dev',
+            'name' => 'Simon Pro',
             'email' => 'admin@admin.com',
+            'password' => bcrypt('123123'),
+        ]);
+        $developer->roles()->attach($admin_role);
+        $developer->permissions()->attach(Permission::all());
+
+        $developer = User::create([
+            'name' => 'Caleb Dev',
+            'email' => 'dev@dev.com',
             'password' => bcrypt('123123'),
         ]);
         $developer->roles()->attach($dev_role);

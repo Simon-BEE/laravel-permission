@@ -13,12 +13,12 @@ trait RoleTrait
      * @param string ...$roles
      * @return boolean
      */
-   public function hasRoles(string ...$roles): bool
+   public function hasRoles(string...$roles): bool
    {
        foreach ($roles as $role) {
            if ($this->roles->contains('slug', $role)) {
                return true;
-           }
+            }
        }
        return false;
    }
@@ -53,10 +53,10 @@ trait RoleTrait
     private function getNewRolesRequested(array $roles): Collection
     {
         $filteredRolesRequested = $this->getRolesRequested($roles)->reject(function ($role){
-            return $this->hasRoles($role);
+            return $this->hasRoles($role->slug);
         });
 
-        throw_if($filteredRolesRequested->isEmpty(), \Exception::class ,'No roles found');
+        throw_if($filteredRolesRequested->isEmpty(), \Exception::class ,'No new roles found');
 
         return $filteredRolesRequested;
     }
@@ -70,10 +70,10 @@ trait RoleTrait
     private function getOldRolesRequested(array $roles): Collection
     {
         $filteredRolesRequested = $this->getRolesRequested($roles)->reject(function ($role){
-            return !$this->hasRoles($role);
+            return !$this->hasRoles($role->slug);
         });
 
-        throw_if($filteredRolesRequested->isEmpty(), \Exception::class ,'No roles found');
+        throw_if($filteredRolesRequested->isEmpty(), \Exception::class ,'No roles already added found');
 
         return $filteredRolesRequested;
     }
