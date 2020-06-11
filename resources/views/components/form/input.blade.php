@@ -15,8 +15,7 @@
         id="{{ $name }}"
         class="form-input w-full border-gray-200 @error($name) border-red-500 @enderror"
         placeholder="{{ $placeholder ?? '' }}"
-        {{-- value="{{ old($name, $value ?? '') }}" --}}
-        value="{{ old($name) ?? ((isset($property) && $property) ? $property : '') }}"
+        value="{{ isset($value) ? $value : '' }}"
         {{ ($required ?? false) ? 'required' : '' }}
         {{ $attributes }}
     >

@@ -15,6 +15,11 @@ class Role extends Model
         'name', 'slug',
     ];
 
+    public function hasPermission(int $permissionId)
+    {
+        return $this->permissions->contains('id', $permissionId);
+    }
+
     /**
      * RELATIONSHIPS
      */

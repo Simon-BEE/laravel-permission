@@ -18,6 +18,9 @@ class DestroyController extends Controller
     {
         $role->delete();
 
-        return back();
+        return back()->with([
+            'type' => 'success',
+            'message' => 'Role has been removed.',
+        ]);
     }
 }
