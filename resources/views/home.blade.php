@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
+@section('meta-title')
+    Home
+@endsection
+
 @section('header')
-    <header class="bg-white shadow">
-        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold leading-tight text-gray-900">Home</h1>
-        </div>
-    </header>
+    Home
 @endsection
 
 @section('content')

@@ -13,15 +13,18 @@
                 </div>
                 <div class="hidden md:block">
                     <div class="mx-10 flex items-baseline">
-                        <a href="{{ route('home') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700">
+                        <a href="{{ route('home') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white @if(Route::is('home')) bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 @else hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 @endif">
                             Home
                         </a>
                         @role('admin')
-                        <a href="{{ route('permissions.index') }}" class="mx-1 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
-                            Roles and Permissions
+                        <a href="{{ route('roles.index') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white @if(Route::is('roles.index')) bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 @else hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 @endif">
+                            Roles
+                        </a>
+                        <a href="{{ route('permissions.index') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white @if(Route::is('permissions.index')) bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 @else hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 @endif">
+                            Permissions
                         </a>
                         @endrole
-                        <a href="#" class="mx-1 px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700">
+                        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-white @if(Route::is('users.index')) bg-gray-900 focus:outline-none focus:text-white focus:bg-gray-700 @else hover:bg-gray-700 focus:outline-none focus:text-white focus:bg-gray-700 @endif">
                             Users
                         </a>
                     </div>
@@ -66,9 +69,12 @@
                Home
             </a>
             @role('admin')
-            <a href="{{ route('permissions.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 focus:text-white focus:outline-none focus:text-white focus:bg-gray-700">
-                Roles and Permissions
+            <a href="{{ route('roles.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 focus:text-white focus:outline-none focus:text-white focus:bg-gray-700">
+                Roles
              </a>
+             <a href="{{ route('permissions.index') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 focus:text-white focus:outline-none focus:text-white focus:bg-gray-700">
+                 Permissions
+              </a>
             @endrole
             <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 focus:text-white focus:outline-none focus:text-white focus:bg-gray-700">
                Users

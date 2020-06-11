@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\RolePermission;
+namespace App\Http\Controllers\Role;
 
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -18,6 +18,6 @@ class IndexController extends Controller
     {
         $roles = Role::all();
 
-        return view('rolepermission.index', compact('roles'));
+        return view('roles.index', compact('roles'));
     }
 }
