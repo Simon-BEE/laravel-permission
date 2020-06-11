@@ -11,14 +11,10 @@
 @section('content')
 
 <div class="flex justify-end items-center mb-4">
-    <a href="#" class="flex items-center mr-3 p-2 rounded bg-indigo-600 text-white hover:bg-indigo-500">
+    <a href="{{ route('roles.create') }}" class="flex items-center mr-3 p-2 rounded bg-indigo-600 text-white hover:bg-indigo-500">
         <span class="mdi mdi-plus mr-2"></span>
         Create Role
     </a>
-    {{-- <a href="#" class="flex items-center p-2 rounded bg-blue-500 text-white hover:bg-blue-400">
-        <span class="mdi mdi-plus mr-2"></span>
-        Create Permission
-    </a> --}}
 </div>
 
 <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">

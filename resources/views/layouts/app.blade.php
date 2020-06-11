@@ -12,6 +12,7 @@
     <script nomodule src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine-ie11.min.js" defer></script>
 
     <script src="{{ mix('js/app.js') }}" defer></script>
+    @yield('extra-head')
 </head>
 <body class="bg-gray-200 min-h-screen font-base overflow-x-hidden">
 <div id="app">
@@ -37,7 +38,8 @@
         </div>
     </main>
 
-
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.js"></script> --}}
+    @yield('extra-js')
 </div>
 </body>
 </html>

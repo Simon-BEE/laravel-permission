@@ -28,6 +28,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('roles', 'Role\IndexController')->name('roles.index');
+        Route::get('roles/create', 'Role\CreateController@create')->name('roles.create');
+        Route::post('roles', 'Role\CreateController@store')->name('roles.store');
+
         Route::get('permissions', 'Permission\IndexController')->name('permissions.index');
     });
 
