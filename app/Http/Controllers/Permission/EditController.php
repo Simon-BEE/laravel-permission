@@ -14,8 +14,6 @@ class EditController extends Controller
     {
         $permission->load(['roles']);
 
-        $permission->setPermissionToAdmin();
-
         return view('permissions.edit', [
             'permission' => $permission,
             'roles' => Role::allWithoutAdmin(),
@@ -44,8 +42,6 @@ class EditController extends Controller
                 }
             }
         }
-
-        $permission->setPermissionToAdmin();
 
         return redirect()->route('permissions.index')->with([
             'type' => 'success',

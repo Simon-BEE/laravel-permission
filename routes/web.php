@@ -24,14 +24,6 @@ Route::get('/', function () {
 Route::group(['middleware' => ['auth']], function () {
     Route::get('home', 'HomeController@index')->name('home');
 
-    Route::get('users', 'User\IndexController')->name('users.index');
-    Route::get('users/{user}', 'User\ShowController')->name('users.show');
-    Route::group(['middleware' => ['can:update,user']], function () {
-        Route::get('users/{user}/edit', 'User\EditController@edit')->name('users.edit');
-        Route::patch('users/{user}', 'User\EditController@update')->name('users.update');
-        Route::delete('users/{user}', 'User\DestroyController')->name('users.destroy');
-    });
-
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('roles', 'Role\IndexController')->name('roles.index');
         Route::get('roles/create', 'Role\CreateController@create')->name('roles.create');
@@ -49,6 +41,14 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('users/create', 'User\CreateController@create')->name('users.create');
         Route::post('users', 'User\CreateController@store')->name('users.store');
+    });
+
+    Route::get('users', 'User\IndexController')->name('users.index');
+    Route::get('users/{user}', 'User\ShowController')->name('users.show');
+    Route::group(['middleware' => ['can:update,user']], function () {
+        Route::get('users/{user}/edit', 'User\EditController@edit')->name('users.edit');
+        Route::patch('users/{user}', 'User\EditController@update')->name('users.update');
+        Route::delete('users/{user}', 'User\DestroyController')->name('users.destroy');
     });
 
 });

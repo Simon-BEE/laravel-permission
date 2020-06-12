@@ -28,8 +28,6 @@ class CreateController extends Controller
             $permission->roles()->attach($validateData['roles']);
         }
 
-        $permission->setPermissionToAdmin();
-
         return redirect()->route('permissions.index')->with([
             'type' => 'success',
             'message' => 'A permission has been created.'

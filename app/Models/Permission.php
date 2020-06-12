@@ -19,6 +19,23 @@ class Permission extends Model
      * * METHODS
      */
 
+     public static function booted()
+     {
+        static::created(function($permission){
+            $adminRole = Role::where('slug', 'admin')->first();
+            if (!$adminRole->hasPermission($permission->id)) {
+                $permission->roles()->attach($adminRole);
+            }
+        });
+
+        static::updated(function($permission){
+            $adminRole = Role::where('slug', 'admin')->first();
+            if (!$adminRole->hasPermission($permission->id)) {
+                $permission->roles()->attach($adminRole);
+            }
+        });
+     }
+
     /**
      * Check if a permission has a role
      *
@@ -28,20 +45,6 @@ class Permission extends Model
     public function hasRole(int $roleId): bool
     {
         return $this->roles->contains('id', $roleId);
-    }
-
-    /**
-     * Set permission to role Admin
-     * ! It must be mandatory
-     *
-     * @return void
-     */
-    public function setPermissionToAdmin(): void
-    {
-        $adminRole = Role::where('slug', 'admin')->first();
-        if (!$adminRole->hasPermission($this->id)) {
-            $this->roles()->attach($adminRole);
-        }
     }
 
     /**
