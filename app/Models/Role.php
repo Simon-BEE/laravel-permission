@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
@@ -15,13 +16,39 @@ class Role extends Model
         'name', 'slug',
     ];
 
-    public function hasPermission(int $permissionId)
+    /**
+     * * METHODS
+     */
+
+    /**
+     * Check if a role has a permission
+     *
+     * @param integer $permissionId
+     * @return boolean
+     */
+    public function hasPermission(int $permissionId): bool
     {
         return $this->permissions->contains('id', $permissionId);
     }
 
     /**
-     * RELATIONSHIPS
+     * * SCOPES
+     */
+
+     /**
+      * Return all roles without the main role Admin
+      *
+      * @return Collection
+      */
+     public function scopeAllWithoutAdmin(): Collection
+     {
+         return self::all()->reject(function ($role){
+            return $role->slug === 'admin';
+        });
+     }
+
+    /**
+     * * RELATIONSHIPS
      */
 
     /**

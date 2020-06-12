@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Permission;
 
 use App\Http\Controllers\Controller;
+use App\Models\Permission;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -15,6 +16,8 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        //
+        $permissions = Permission::all();
+
+        return view('permissions.index', compact('permissions'));
     }
 }

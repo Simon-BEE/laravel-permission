@@ -16,7 +16,36 @@ class Permission extends Model
     ];
 
     /**
-     * RELATIONSHIPS
+     * * METHODS
+     */
+
+    /**
+     * Check if a permission has a role
+     *
+     * @param integer $roleId
+     * @return boolean
+     */
+    public function hasRole(int $roleId): bool
+    {
+        return $this->roles->contains('id', $roleId);
+    }
+
+    /**
+     * Set permission to role Admin
+     * ! It must be mandatory
+     *
+     * @return void
+     */
+    public function setPermissionToAdmin(): void
+    {
+        $adminRole = Role::where('slug', 'admin')->first();
+        if (!$adminRole->hasPermission($this->id)) {
+            $this->roles()->attach($adminRole);
+        }
+    }
+
+    /**
+     * * RELATIONSHIPS
      */
 
     /**

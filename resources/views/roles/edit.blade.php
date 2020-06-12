@@ -31,15 +31,22 @@
                 helper="No space or special caracters please, use dash instead."
                 required
             />
-
             <x-form.select
                 label="You can choose some permissions already created"
                 name="permissions[]"
+                helper="Ctrl + click on item if you want unselect one."
                 multiple>
                 @foreach ($permissions as $permission)
                     <option value="{{ $permission->id }}" {{ $role->hasPermission($permission->id) ? 'selected' : '' }}>{{ $permission->name }}</option>
                 @endforeach
             </x-form.select>
+
+            @if ($role->slug === 'admin')
+                <p class="mb-1 text-red-400 text-sm font-semibold flex items-center">
+                    <span class="mdi mdi-alert-circle text-xl mr-2"></span>
+                    Admin role must have all permissions.
+                </p>
+            @endif
 
             <x-form.button>Edit</x-form.button>
         </form>
