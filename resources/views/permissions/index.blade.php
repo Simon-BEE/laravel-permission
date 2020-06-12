@@ -57,12 +57,12 @@
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                 <span
-                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
                     {{ $permission->slug }}
                 </span>
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium">
-                    <a href="{{ route('permissions.edit', $permission) }}" class="bg-gray-200 p-2 rounded inline-flex text-indigo-600 hover:text-indigo-900 mr-2">
+                    <a href="{{ route('permissions.edit', $permission) }}" class="bg-gray-200 p-2 rounded inline-flex text-blue-500 hover:text-indigo-900 mr-2">
                         <span class="text-lg mdi mdi-pencil-outline"></span>
                     </a>
                     <x-form.button class="bg-gray-200 text-red-600 hover:bg-gray-300" classDiv="inline-block" @click="isDialogOpen = true; $refs.modalPermission.action = '{{ route('permissions.destroy', $permission) }}'">

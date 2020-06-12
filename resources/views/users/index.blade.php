@@ -11,7 +11,7 @@
 @section('content')
 
 <div class="flex justify-end items-center mb-4">
-    <a href="#" class="flex items-center p-2 rounded bg-blue-500 text-white hover:bg-blue-400">
+    <a href="{{ route('users.create') }}" class="flex items-center p-2 rounded bg-orange-500 text-white hover:bg-orange-400">
         <span class="mdi mdi-plus mr-2"></span>
         Create User
     </a>
@@ -33,26 +33,35 @@
                 style="text-align: start">
                 Email
             </th>
+            <th class="px-6 py-3 border-b border-gray-200 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider"
+                style="text-align: start">
+                Roles
+            </th>
             <th class="px-6 py-3 border-b border-gray-200 bg-gray-50"></th>
         </tr>
         </thead>
         <tbody class="bg-white">
         @forelse ($users as $user)
-            <tr>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+            <tr class="border-b border-gray-200">
+                <td class="px-6 py-4 whitespace-no-wrap">
                     {{ $user->id }}
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                <td class="px-6 py-4 whitespace-no-wrap">
                     {{ $user->name }}
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                <span
-                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                <td class="px-6 py-4 whitespace-no-wrap">
                     {{ $user->email }}
-                </span>
                 </td>
-                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 font-medium">
-                    <a href="#" class="bg-gray-200 p-2 rounded inline-flex text-indigo-600 hover:text-indigo-900 mr-2">
+                <td class="px-6 py-4 whitespace-no-wrap flex flex-wrap md:w-64">
+                @foreach ($user->roles as $role)
+                <span
+                    class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+                    {{ $role->name }}
+                </span>
+                @endforeach
+                </td>
+                <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium">
+                    <a href="#" class="bg-gray-200 p-2 rounded inline-flex text-orange-400 hover:text-orange-900 mr-2">
                         <span class="text-lg mdi mdi-pencil-outline"></span>
                     </a>
                     <a href="#" class="bg-gray-200 p-2 rounded inline-flex text-red-400 hover:text-red-600">

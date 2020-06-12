@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Collection;
 trait RoleTrait
 {
     /**
-     * Check if an user has some roles
+     * Check if a user has some roles
      *
      * @param string ...$roles
      * @return boolean
      */
-   public function hasRoles(string...$roles): bool
+   public function hasRoles(string ...$roles): bool
    {
        foreach ($roles as $role) {
            if ($this->roles->contains('slug', $role)) {
@@ -24,72 +24,58 @@ trait RoleTrait
    }
 
    /**
-    * Give role not already added to an user
+    * Give role not already added to a user
     *
-    * @param string ...$roles
+    * @param array $roles
     * @return void
     */
-   public function giveRolesTo(string ...$roles): void
+   public function giveRolesTo(array $roles): void
    {
-       $this->roles()->attach($this->getNewRolesRequested($roles));
+       $this->roles()->sync($this->getRolesRequested($roles));
    }
 
    /**
-    * Remove role not already added to an user
+    * Remove role not already added to a user
     *
-    * @param string ...$roles
+    * @param array $roles
     * @return void
     */
-   public function removeRolesTo(string ...$roles): void
+   public function removeRolesTo(array $roles): void
    {
-       $this->roles()->detach($this->getOldRolesRequested($roles));
+       $this->roles()->detach($this->getRolesRequested($roles, false));
    }
-    /**
-     * Get roles not already added and requested if exists
-     *
-     * @param array $roles
-     * @return Collection
-     */
-    private function getNewRolesRequested(array $roles): Collection
-    {
-        $filteredRolesRequested = $this->getRolesRequested($roles)->reject(function ($role){
-            return $this->hasRoles($role->slug);
-        });
-
-        throw_if($filteredRolesRequested->isEmpty(), \Exception::class ,'No new roles found');
-
-        return $filteredRolesRequested;
-    }
-
-    /**
-     * Get roles already added and requested if exists
-     *
-     * @param array $roles
-     * @return Collection
-     */
-    private function getOldRolesRequested(array $roles): Collection
-    {
-        $filteredRolesRequested = $this->getRolesRequested($roles)->reject(function ($role){
-            return !$this->hasRoles($role->slug);
-        });
-
-        throw_if($filteredRolesRequested->isEmpty(), \Exception::class ,'No roles already added found');
-
-        return $filteredRolesRequested;
-    }
 
     /**
      * Get all roles requested if exists
      *
      * @param array $roles
+     * @param bool $new
      * @return Collection
      */
-    private function getRolesRequested(array $roles): Collection
+    private function getRolesRequested(array $roles, bool $new = true): Collection
     {
-        $rolesRequested = Role::whereIn('slug', $roles)->get();
+        $allRoles = Role::all();
 
-        throw_if($rolesRequested->isEmpty(), \Exception::class ,'No roles found');
+        $rolesRequested = $allRoles->filter(function ($role) use ($roles){
+            foreach ($roles[0] as $roleRequest) {
+                if ($roleRequest == $role->slug) {
+                    return true;
+                }
+            }
+        });
 
-        return $rolesRequested;
+        if ($new) {
+            $filteredRolesRequested = $rolesRequested->reject(function ($role){
+                return $this->hasRoles($role->slug);
+            });
+        } else {
+            $filteredRolesRequested = $rolesRequested->reject(function ($role){
+                return !$this->hasRoles($role->slug);
+            });
+        }
+
+        // throw_if($rolesRequested->isEmpty(), \Exception::class ,'No roles found');
+
+        return $filteredRolesRequested;
     }
 }

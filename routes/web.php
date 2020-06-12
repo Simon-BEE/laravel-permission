@@ -36,10 +36,16 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('permissions', 'Permission\IndexController')->name('permissions.index');
         Route::get('permissions/create', 'Permission\CreateController@create')->name('permissions.create');
-        Route::get('permissions/edit/{permission}', 'Permission\EditController@edit')->name('permissions.edit');
-        Route::patch('permissions/{permission}', 'Permission\EditController@update')->name('permissions.update');
+        Route::get('permissions/edit/{permission:slug}', 'Permission\EditController@edit')->name('permissions.edit');
+        Route::patch('permissions/{permission:slug}', 'Permission\EditController@update')->name('permissions.update');
         Route::post('permissions', 'Permission\CreateController@store')->name('permissions.store');
-        Route::delete('permissions/{permission}', 'Permission\DestroyController')->name('permissions.destroy');
+        Route::delete('permissions/{permission:slug}', 'Permission\DestroyController')->name('permissions.destroy');
+
+        Route::get('users/create', 'User\CreateController@create')->name('users.create');
+        Route::get('users/edit/{user}', 'User\EditController@edit')->name('users.edit');
+        Route::patch('users/{user}', 'User\EditController@update')->name('users.update');
+        Route::post('users', 'User\CreateController@store')->name('users.store');
+        Route::delete('users/{user}', 'User\DestroyController')->name('users.destroy');
     });
 
 });

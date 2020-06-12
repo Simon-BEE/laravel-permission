@@ -8,52 +8,78 @@ use Illuminate\Database\Eloquent\Collection;
 trait PermissionTrait
 {
     /**
-     * Check if an user has permission to do an action
+     * Check if a user has permission to do an action
      *
-     * @param Permission $permission Permission's slug
+     * @param string|Permission $permission Permission's slug or Object
      * @return boolean
      */
-    public function hasPermissionTo(Permission $permission): bool
+    public function hasPermissionTo($permission): bool
     {
+        if (is_string($permission)) {
+            return $this->hasPermission($permission);
+        }
+
         return $this->hasPermission($permission) || $this->hasPermissionThroughRole($permission);
     }
 
     /**
-     * Give permission not already added to an user
+     * Give permission not already added to a user
      *
-     * @param string ...$permissions
-     * @return void
+     * @param array ...$permissions
+     * @return bool
      */
-    public function givePermissionsTo(string ...$permissions): void
+    public function givePermissionsTo(array $permissions): bool
     {
-        $this->permissions()->attach($this->getNewPermissionsRequested($permissions));
+        $permissionsShouldBeAdded = $this->getPermissionsRequested($permissions);
+        if ($permissionsShouldBeAdded->isNotEmpty()) {
+            $this->permissions()->attach($permissionsShouldBeAdded);
+            return true;
+        }
+
+        return false;
     }
 
     /**
-     * Remove permission not already added to an user
+     * Give permissions to user through his role
      *
-     * @param string ...$permissions
-     * @return void
-     */
-    public function removePermissionsTo(string ...$permissions): void
-    {
-        $this->permissions()->detach($this->getOldPermissionsRequested($permissions));
-    }
-    /**
-     * Check if an user has permission to do something through his permissions
-     *
-     * @param Permission $permission Permission's slug
+     * @param Permission $permission
      * @return boolean
      */
-    private function hasPermission(Permission $permission): bool
+    public function givePermissionsThroughRole(): bool
     {
+        foreach ($this->roles as $role) {
+            $this->givePermissionsTo($role->permissions->pluck('slug')->toArray());
+        }
+        return false;
+    }
+
+    /**
+     * Remove permission not already added to a user
+     *
+     * @param array ...$permissions
+     * @return void
+     */
+    public function removePermissionsTo(array $permissions): void
+    {
+        $this->permissions()->detach($this->getPermissionsRequested($permissions, false));
+    }
+    /**
+     * Check if a user has permission to do something through his permissions
+     *
+     * @param string|Permission $permission Permission's slug
+     * @return boolean
+     */
+    private function hasPermission($permission): bool
+    {
+        $slug = is_string($permission) ? $permission : $permission->slug;
+
         return $this->permissions
-            ->contains('slug', $permission->slug)
+            ->contains('slug', $slug)
         ;
     }
 
     /**
-     * Check if an user has permission to do something through his role
+     * Check if a user has permission to do something through his role
      *
      * @param Permission $permission
      * @return boolean
@@ -72,47 +98,22 @@ trait PermissionTrait
      * Get all permissions requested if exists
      *
      * @param array $permissions
+     * @param bool $new
      * @return Collection
      */
-    private function getPermissionsRequested(array $permissions): Collection
+    private function getPermissionsRequested(array $permissions, bool $new = true): Collection
     {
         $permissionsRequested = Permission::whereIn('slug', $permissions)->get();
 
-        throw_if($permissionsRequested->isEmpty(), \Exception::class ,'No permissions found');
-
-        return $permissionsRequested;
-    }
-
-    /**
-     * Get permissions not already added and requested if exists
-     *
-     * @param array $permissions
-     * @return Collection
-     */
-    private function getNewPermissionsRequested(array $permissions): Collection
-    {
-        $filteredPermissionsRequested = $this->getPermissionsRequested($permissions)->reject(function ($permission){
-            return $this->hasPermissionTo($permission);
-        });
-
-        throw_if($filteredPermissionsRequested->isEmpty(), \Exception::class ,'No permissions found');
-
-        return $filteredPermissionsRequested;
-    }
-
-    /**
-     * Get permissions already added and requested if exists
-     *
-     * @param array $permissions
-     * @return Collection
-     */
-    private function getOldPermissionsRequested(array $permissions): Collection
-    {
-        $filteredPermissionsRequested = $this->getPermissionsRequested($permissions)->reject(function ($permission){
-            return !$this->hasPermissionTo($permission);
-        });
-
-        throw_if($filteredPermissionsRequested->isEmpty(), \Exception::class ,'No permissions found');
+        if ($new) {
+            $filteredPermissionsRequested = $permissionsRequested->reject(function ($permission){
+                return $this->hasPermission($permission);
+            });
+        } else {
+            $filteredPermissionsRequested = $permissionsRequested->reject(function ($permission){
+                return !$this->hasPermission($permission);
+            });
+        }
 
         return $filteredPermissionsRequested;
     }

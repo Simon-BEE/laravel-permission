@@ -1,4 +1,4 @@
-<div class="flex flex-wrap items-center">
+<div class="flex flex-wrap items-center mb-2">
     <label for="{{ $name }}" class=" text-gray-700 mb-2">
         {{ __($label) }}
     </label>
