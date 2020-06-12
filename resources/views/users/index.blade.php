@@ -10,12 +10,14 @@
 
 @section('content')
 
-<div class="flex justify-end items-center mb-4">
-    <a href="{{ route('users.create') }}" class="flex items-center p-2 rounded bg-orange-500 text-white hover:bg-orange-400">
-        <span class="mdi mdi-plus mr-2"></span>
-        Create User
-    </a>
-</div>
+@role('admin')
+    <div class="flex justify-end items-center mb-4">
+        <a href="{{ route('users.create') }}" class="flex items-center p-2 rounded bg-orange-500 text-white hover:bg-orange-400">
+            <span class="mdi mdi-plus mr-2"></span>
+            Create User
+        </a>
+    </div>
+@endrole
 
 <x-modal title="Are you sure ?">
     <p>Are you sure you want to delete this user?</p>
@@ -74,12 +76,14 @@
                     <a href="{{ route('users.show', $user) }}" class="bg-gray-200 p-2 rounded inline-flex text-green-400 hover:text-green-900 mr-2">
                         <span class="text-lg mdi mdi-eye"></span>
                     </a>
-                    <a href="{{ route('users.edit', $user) }}" class="bg-gray-200 p-2 rounded inline-flex text-orange-400 hover:text-orange-900 mr-2">
-                        <span class="text-lg mdi mdi-pencil-outline"></span>
-                    </a>
-                    <x-form.button class="bg-gray-200 text-red-600 hover:bg-gray-300" classDiv="inline-block" @click="isDialogOpen = true; $refs.modalUser.action = '{{ route('users.destroy', $user) }}'">
-                        <span class="text-lg mdi mdi-delete-outline"></span>
-                    </x-form.button>
+                    @can('update', $user)
+                        <a href="{{ route('users.edit', $user) }}" class="bg-gray-200 p-2 rounded inline-flex text-orange-400 hover:text-orange-900 mr-2">
+                            <span class="text-lg mdi mdi-pencil-outline"></span>
+                        </a>
+                        <x-form.button class="bg-gray-200 text-red-600 hover:bg-gray-300" classDiv="inline-block" @click="isDialogOpen = true; $refs.modalUser.action = '{{ route('users.destroy', $user) }}'">
+                            <span class="text-lg mdi mdi-delete-outline"></span>
+                        </x-form.button>
+                    @endcan
                 </td>
             </tr>
         @empty

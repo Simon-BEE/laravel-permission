@@ -45,32 +45,34 @@
                 required
             />
 
-            <div class="flex flex-col md:flex-row items-baseline justify-between">
-                <div class="md:w-5/12">
-                    <x-form.select
-                        label="You can choose some roles already created"
-                        name="roles[]"
-                        helper="If fou choose Administrator, not need to add another role. Ctrl + click on item if you want unselect one."
-                        required
-                        multiple>
-                        @foreach ($roles as $role)
-                            <option value="{{ $role->slug }}" {{ $user->hasRoles($role->slug) ? 'selected' : '' }}>{{ $role->name }}</option>
-                        @endforeach
-                    </x-form.select>
-                </div>
+            @role('admin')
+                <div class="flex flex-col md:flex-row items-baseline justify-between">
+                    <div class="md:w-5/12">
+                        <x-form.select
+                            label="You can choose some roles already created"
+                            name="roles[]"
+                            helper="If fou choose Administrator, not need to add another role. Ctrl + click on item if you want unselect one."
+                            required
+                            multiple>
+                            @foreach ($roles as $role)
+                                <option value="{{ $role->slug }}" {{ $user->hasRoles($role->slug) ? 'selected' : '' }}>{{ $role->name }}</option>
+                            @endforeach
+                        </x-form.select>
+                    </div>
 
-                <div class="md:w-5/12">
-                    <x-form.select
-                        label="You can add some additionals permissions"
-                        name="permissions[]"
-                        helper="Permissions are automatically added via roles. But you can add others."
-                        multiple>
-                        @foreach ($permissions as $permission)
-                            <option value="{{ $permission->slug }}" {{ $user->hasPermissionTo($permission->slug) ? 'selected' : '' }}>{{ $permission->name }}</option>
-                        @endforeach
-                    </x-form.select>
+                    <div class="md:w-5/12">
+                        <x-form.select
+                            label="You can add some additionals permissions"
+                            name="permissions[]"
+                            helper="Permissions are automatically added via roles. But you can add others."
+                            multiple>
+                            @foreach ($permissions as $permission)
+                                <option value="{{ $permission->slug }}" {{ $user->hasPermissionTo($permission->slug) ? 'selected' : '' }}>{{ $permission->name }}</option>
+                            @endforeach
+                        </x-form.select>
+                    </div>
                 </div>
-            </div>
+            @endrole
 
             <x-form.button>Edit</x-form.button>
         </form>

@@ -30,14 +30,16 @@ class EditController extends Controller
 
         $user->update($validateData);
 
-        $userRepository->resetAuthRelationship($user);
+        if (auth()->user()->hasRoles('admin')) {
+            $userRepository->resetAuthRelationship($user);
 
-        $user = $userRepository->setRolesRelationship($user, $validateData['roles']);
+            $user = $userRepository->setRolesRelationship($user, $validateData['roles']);
 
-        $user->givePermissionsThroughRole();
+            $user->givePermissionsThroughRole();
 
-        if (isset($validateData['permissions']) && !empty($validateData['permissions'])) {
-            $userRepository->setPermissionsRelationship($user, $validateData['permissions']);
+            if (isset($validateData['permissions']) && !empty($validateData['permissions'])) {
+                $userRepository->setPermissionsRelationship($user, $validateData['permissions']);
+            }
         }
 
         return redirect()->route('users.index')->with([

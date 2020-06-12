@@ -39,7 +39,7 @@ class UpdateUserRequest extends FormRequest
                 'max:255',
             ],
             'roles' => [
-                'required',
+                auth()->user()->hasRoles('admin') ? 'required' : 'nullable',
                 'array',
                 'min:1',
                 'exists:roles,slug',
