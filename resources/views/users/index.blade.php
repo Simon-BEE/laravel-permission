@@ -17,6 +17,16 @@
     </a>
 </div>
 
+<x-modal title="Are you sure ?">
+    <p>Are you sure you want to delete this user?</p>
+    <div class="mt-5 flex justify-end">
+        <x-form.button classDiv="none" class="bg-gray-200 text-gray-700 hover:bg-gray-300" @click="isDialogOpen = false">Cancel</x-form.button>
+        <x-form.form-button action="#" method="DELETE" class="bg-red-500 text-white hover:bg-red-600" x-ref="modalUser">
+            Delete this user
+        </x-form.form-button>
+    </div>
+</x-modal>
+
 <div class="align-middle inline-block min-w-full shadow overflow-hidden sm:rounded-lg border-b border-gray-200">
     <table class="min-w-full">
         <thead class="bg-gray-100">
@@ -61,12 +71,12 @@
                 @endforeach
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium">
-                    <a href="#" class="bg-gray-200 p-2 rounded inline-flex text-orange-400 hover:text-orange-900 mr-2">
+                    <a href="{{ route('users.edit', $user) }}" class="bg-gray-200 p-2 rounded inline-flex text-orange-400 hover:text-orange-900 mr-2">
                         <span class="text-lg mdi mdi-pencil-outline"></span>
                     </a>
-                    <a href="#" class="bg-gray-200 p-2 rounded inline-flex text-red-400 hover:text-red-600">
+                    <x-form.button class="bg-gray-200 text-red-600 hover:bg-gray-300" classDiv="inline-block" @click="isDialogOpen = true; $refs.modalUser.action = '{{ route('users.destroy', $user) }}'">
                         <span class="text-lg mdi mdi-delete-outline"></span>
-                    </a>
+                    </x-form.button>
                 </td>
             </tr>
         @empty

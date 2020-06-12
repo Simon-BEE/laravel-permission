@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\Role;
+use App\Models\User;
 use App\Models\Permission;
+use App\Repository\UserRepository;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
-use App\Models\User;
 
 class CreateController extends Controller
 {
@@ -18,24 +19,18 @@ class CreateController extends Controller
         ]);
     }
 
-    public function store(StoreUserRequest $request)
+    public function store(StoreUserRequest $request, UserRepository $userRepository)
     {
         $validateData = $request->validated();
 
         $user = User::create($validateData);
 
-        if (in_array('admin' , $validateData['roles'])) {
-            $user->roles()->sync(Role::where('slug', 'admin')->first());
-        }else{
-            $user->giveRolesTo($validateData['roles']);
-            $user->load('roles');
-        }
+        $user = $userRepository->setRolesRelationship($user, $validateData['roles']);
 
         $user->givePermissionsThroughRole();
-        $user->load('permissions');
 
         if (isset($validateData['permissions']) && !empty($validateData['permissions'])) {
-            $user->givePermissionsTo($validateData['permissions']);
+            $userRepository->setPermissionsRelationship($user, $validateData['permissions']);
         }
 
         return redirect()->route('users.index')->with([

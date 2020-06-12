@@ -57,7 +57,7 @@ trait RoleTrait
         $allRoles = Role::all();
 
         $rolesRequested = $allRoles->filter(function ($role) use ($roles){
-            foreach ($roles[0] as $roleRequest) {
+            foreach ($roles as $roleRequest) {
                 if ($roleRequest == $role->slug) {
                     return true;
                 }

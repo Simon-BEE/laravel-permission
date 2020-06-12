@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
+    protected int $userId;
+
     /**
      * Determine if the user is authorized to make this request.
      *
@@ -32,7 +35,7 @@ class StoreUserRequest extends FormRequest
             'email' => [
                 'required',
                 'email',
-                'unique:users,email',
+                Rule::unique('users', 'email')->ignore($this->userId),
                 'max:255',
             ],
             'roles' => [
@@ -48,4 +51,15 @@ class StoreUserRequest extends FormRequest
             ],
         ];
     }
+
+    /**
+    * Check if user is in url, otherwise use auth id
+    *  /!\
+    *
+    * @return void
+    */
+   public function prepareForValidation()
+   {
+        $this->userId = $this->route()->user->id;
+   }
 }

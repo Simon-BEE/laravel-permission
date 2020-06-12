@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Permission;
 use App\Models\Role;
 use App\Models\Permission;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePermissionRequest;
 
