@@ -14,46 +14,44 @@
     <script src="{{ mix('js/app.js') }}" defer></script>
     @yield('extra-head')
 </head>
-<body class="bg-gray-200 min-h-screen font-base overflow-x-hidden">
-<div id="app">
+<body class="bg-gray-200 min-h-screen font-base overflow-x-hidden relative" x-data="{ 'isDialogOpen': false }">
+    <div id="app">
 
+        @include('includes.nav')
 
-    @include('includes.nav')
-
-
-    <header class="bg-white shadow">
-        <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <h1 class="text-3xl font-bold leading-tight text-gray-900">@yield('header')</h1>
-        </div>
-    </header>
-
-    <main class="relative">
-        @if (session()->has('type'))
-            <x-alert type="{{ session('type') }}">{{ session()->has('message') ? session('message') : '' }}</x-alert>
-        @endif
-        <div class="container mx-auto py-6 sm:px-6 lg:px-8 overflow-x-scroll md:overflow-x-hidden">
-            <!-- Replace with your content -->
-            <div class="px-4 py-6 sm:px-0">
-
-                @yield('content')
+        <header class="bg-white shadow">
+            <div class="container mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <h1 class="text-3xl font-bold leading-tight text-gray-900">@yield('header')</h1>
             </div>
-            <!-- /End replace -->
-        </div>
-    </main>
+        </header>
 
-    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.js"></script> --}}
-    <script>
-        const flashAlertElement = document.querySelector('.alert-flash');
-        if (flashAlertElement) {
-            setTimeout(() => {
-                flashAlertElement.style.transform = 'translateX(0)';
-            }, 1000);
-            setTimeout(() => {
-                flashAlertElement.style.transform = 'translateX(100%)';
-            }, 5000);
-        }
-    </script>
-    @yield('extra-js')
-</div>
+        <main>
+            @if (session()->has('type'))
+                <x-alert type="{{ session('type') }}">{{ session()->has('message') ? session('message') : '' }}</x-alert>
+            @endif
+            <div class="container mx-auto py-6 sm:px-6 lg:px-8 overflow-x-scroll md:overflow-x-hidden">
+                <!-- Replace with your content -->
+                <div class="px-4 py-6 sm:px-0">
+
+                    @yield('content')
+                </div>
+                <!-- /End replace -->
+            </div>
+        </main>
+
+        {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.js"></script> --}}
+        <script>
+            const flashAlertElement = document.querySelector('.alert-flash');
+            if (flashAlertElement) {
+                setTimeout(() => {
+                    flashAlertElement.style.transform = 'translateX(0)';
+                }, 1000);
+                setTimeout(() => {
+                    flashAlertElement.style.transform = 'translateX(100%)';
+                }, 5000);
+            }
+        </script>
+        @yield('extra-js')
+    </div>
 </body>
 </html>

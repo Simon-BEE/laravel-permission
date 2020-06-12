@@ -1,8 +1,4 @@
-@import url(https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&display=swap);/* You can use this font for arabic sites */
-
-/*@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap');*/
-
-/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
+@import url(https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap);/*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */
 
 /* Document
    ========================================================================== */
@@ -6301,7 +6297,7 @@ video {
 }
 
 .font-base{
-  font-family: Inter;
+  font-family: Nunito;
 }
 
 .font-hairline{
@@ -23553,7 +23549,7 @@ video {
   }
 
   .sm\:font-base{
-    font-family: Inter;
+    font-family: Nunito;
   }
 
   .sm\:font-hairline{
@@ -40806,7 +40802,7 @@ video {
   }
 
   .md\:font-base{
-    font-family: Inter;
+    font-family: Nunito;
   }
 
   .md\:font-hairline{
@@ -58059,7 +58055,7 @@ video {
   }
 
   .lg\:font-base{
-    font-family: Inter;
+    font-family: Nunito;
   }
 
   .lg\:font-hairline{
@@ -75312,7 +75308,7 @@ video {
   }
 
   .xl\:font-base{
-    font-family: Inter;
+    font-family: Nunito;
   }
 
   .xl\:font-hairline{

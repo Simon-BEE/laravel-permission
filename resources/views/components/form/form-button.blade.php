@@ -1,4 +1,4 @@
-<form method="POST" action="{{ $action }}" class="inline-block">
+<form method="POST" action="{{ $action }}" class="inline-block" {{ $attributes }}>
     @csrf
     @method($method ?? 'POST')
         <button

@@ -21,8 +21,6 @@ class EditController extends Controller
     }
 
     /**
-     * TODO: detach permissions were attached and now not selected
-     *
      * @param StoreRoleRequest $request
      * @param Role $role
      * @return void
@@ -34,6 +32,9 @@ class EditController extends Controller
         $validateData['slug'] = Str::slug($validateData['slug']);
 
         $role->update($validateData);
+
+        // Reset all permissions
+        $role->permissions()->detach();
         if (isset($validateData['permissions'])) {
             foreach ($validateData['permissions'] as $permission) {
                 if (!$role->hasPermission($permission)) {
