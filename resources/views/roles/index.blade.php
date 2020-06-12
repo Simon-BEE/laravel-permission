@@ -65,9 +65,11 @@
                     <a href="{{ route('roles.edit', $role) }}" class="bg-gray-200 p-2 rounded inline-flex text-indigo-600 hover:text-indigo-900 mr-2">
                         <span class="text-lg mdi mdi-pencil-outline"></span>
                     </a>
-                    <x-form.button class="bg-gray-200 text-red-600 hover:bg-gray-300" classDiv="inline-block" @click="isDialogOpen = true; $refs.modalRole.action = '{{ route('roles.destroy', $role) }}'">
-                        <span class="text-lg mdi mdi-delete-outline"></span>
-                    </x-form.button>
+                    @if ($role->slug !== 'admin')
+                        <x-form.button class="bg-gray-200 text-red-600 hover:bg-gray-300" classDiv="inline-block" @click="isDialogOpen = true; $refs.modalRole.action = '{{ route('roles.destroy', $role) }}'">
+                            <span class="text-lg mdi mdi-delete-outline"></span>
+                        </x-form.button>
+                    @endif
                 </td>
             </tr>
         @empty

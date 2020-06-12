@@ -9,9 +9,13 @@ class DestroyController extends Controller
 {
     public function __invoke(Role $role)
     {
+        if ($role->slug === 'admin') {
+            abort(403, 'This role can\'t be removed.');
+        }
+
         $role->delete();
 
-        return back()->with([
+        return redirect()->route('roles.index')->with([
             'type' => 'success',
             'message' => 'Role has been removed.',
         ]);

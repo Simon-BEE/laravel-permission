@@ -11,7 +11,7 @@ class DestroyController extends Controller
     {
         $permission->delete();
 
-        return back()->with([
+        return redirect()->route('permissions.index')->with([
             'type' => 'success',
             'message' => 'Permission has been removed.',
         ]);

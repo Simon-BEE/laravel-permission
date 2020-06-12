@@ -15,7 +15,7 @@ class EditController extends Controller
 
     public function edit(User $user)
     {
-        $user->load(['permissions']);
+        $user->load(['permissions', 'roles']);
 
         return view('users.edit', [
             'user' => $user,

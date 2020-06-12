@@ -42,7 +42,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::delete('permissions/{permission:slug}', 'Permission\DestroyController')->name('permissions.destroy');
 
         Route::get('users/create', 'User\CreateController@create')->name('users.create');
-        Route::get('users/{user}', 'User\EditController@edit')->name('users.edit');
+        Route::get('users/{user}', 'User\ShowController')->name('users.show');
+        Route::get('users/{user}/edit', 'User\EditController@edit')->name('users.edit');
         Route::patch('users/{user}', 'User\EditController@update')->name('users.update');
         Route::post('users', 'User\CreateController@store')->name('users.store');
         Route::delete('users/{user}', 'User\DestroyController')->name('users.destroy');

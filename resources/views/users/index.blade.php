@@ -71,6 +71,9 @@
                 @endforeach
                 </td>
                 <td class="px-6 py-4 whitespace-no-wrap text-sm leading-5 font-medium">
+                    <a href="{{ route('users.show', $user) }}" class="bg-gray-200 p-2 rounded inline-flex text-green-400 hover:text-green-900 mr-2">
+                        <span class="text-lg mdi mdi-eye"></span>
+                    </a>
                     <a href="{{ route('users.edit', $user) }}" class="bg-gray-200 p-2 rounded inline-flex text-orange-400 hover:text-orange-900 mr-2">
                         <span class="text-lg mdi mdi-pencil-outline"></span>
                     </a>

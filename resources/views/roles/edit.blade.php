@@ -9,7 +9,24 @@
 @endsection
 
 @section('content')
-    <div class="flex flex-col mb-1 bg-white rounded p-6">
+    @if ($role->slug !== 'admin')
+        <x-modal title="Are you sure ?">
+            <p>Are you sure you want to delete this role?</p>
+            <div class="mt-5 flex justify-end">
+                <x-form.button classDiv="none" class="bg-gray-200 text-gray-700 hover:bg-gray-300" @click="isDialogOpen = false">Cancel</x-form.button>
+                <x-form.form-button action="{{ route('roles.destroy', $role) }}" method="DELETE" class="bg-red-500 text-white hover:bg-red-600">
+                    Delete this role
+                </x-form.form-button>
+            </div>
+        </x-modal>
+    @endif
+
+    <div class="flex flex-col mb-1 bg-white rounded p-6 relative">
+        @if ($role->slug !== 'admin')
+            <x-form.button classDiv="absolute right-0 top-0 mt-2" class="text-red-500 hover:text-red-600 hover:bg-gray-200" @click="isDialogOpen = true;">
+                <span class="text-lg mdi mdi-delete-outline"></span>
+            </x-form.button>
+        @endif
         <form action="{{ route('roles.update', $role) }}" method="post">
             @csrf
             @method('PATCH')
