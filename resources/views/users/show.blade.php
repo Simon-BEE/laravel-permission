@@ -9,7 +9,34 @@
 @endsection
 
 @section('content')
-    <div class="flex flex-col mb-1 bg-white rounded p-6">
+
+    @if (!$user->hasRoles('admin'))
+        @can('update', $user)
+            <x-modal title="Are you sure ?">
+                <p>Are you sure you want to delete this user?</p>
+                <div class="mt-5 flex justify-end">
+                    <x-form.button classDiv="none" class="bg-gray-200 text-gray-700 hover:bg-gray-300" @click="isDialogOpen = false">Cancel</x-form.button>
+                    <x-form.form-button action="{{ route('users.destroy', $user) }}" method="DELETE" class="bg-red-500 text-white hover:bg-red-600">
+                        Delete this user
+                    </x-form.form-button>
+                </div>
+            </x-modal>
+        @endcan
+    @endif
+
+    <div class="flex flex-col mb-1 bg-white rounded p-6 relative">
+        @can('update', $user)
+            <div class="absolute right-0 top-0 mt-2">
+                <a href="{{ route('users.edit', $user) }}" class="p-2 rounded inline-flex text-orange-400 hover:bg-gray-200 mr-2">
+                    <span class="text-lg mdi mdi-pencil-outline"></span>
+                </a>
+                @if (!$user->hasRoles('admin'))
+                    <x-form.button class="text-red-600 hover:bg-gray-200" classDiv="inline-block" @click="isDialogOpen = true">
+                        <span class="text-lg mdi mdi-delete-outline"></span>
+                    </x-form.button>
+                @endif
+            </div>
+        @endcan
         <div class="flex flex-col md:flex-row justify-around">
             <div class="img" style="width:300px;height:300px;">
                 <img src="{{ asset('img/user_') . mt_rand(1,3) . '.jpg' }}" alt="User" class="w-full h-full object-cover rounded shadow-lg">
