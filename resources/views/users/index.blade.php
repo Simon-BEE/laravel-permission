@@ -80,9 +80,11 @@
                         <a href="{{ route('users.edit', $user) }}" class="bg-gray-200 p-2 rounded inline-flex text-orange-400 hover:text-orange-900 mr-2">
                             <span class="text-lg mdi mdi-pencil-outline"></span>
                         </a>
-                        <x-form.button class="bg-gray-200 text-red-600 hover:bg-gray-300" classDiv="inline-block" @click="isDialogOpen = true; $refs.modalUser.action = '{{ route('users.destroy', $user) }}'">
-                            <span class="text-lg mdi mdi-delete-outline"></span>
-                        </x-form.button>
+                        @if (!$user->hasRoles('admin'))
+                            <x-form.button class="bg-gray-200 text-red-600 hover:bg-gray-300" classDiv="inline-block" @click="isDialogOpen = true; $refs.modalUser.action = '{{ route('users.destroy', $user) }}'">
+                                <span class="text-lg mdi mdi-delete-outline"></span>
+                            </x-form.button>
+                        @endif
                     @endcan
                 </td>
             </tr>

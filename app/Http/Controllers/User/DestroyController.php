@@ -9,6 +9,8 @@ class DestroyController extends Controller
 {
     public function __invoke(User $user)
     {
+        abort_if($user->hasRole('admin'), 403, 'You can\'t remove an admin.');
+
         $user->delete();
 
         return redirect()->route('users.index')->with([
