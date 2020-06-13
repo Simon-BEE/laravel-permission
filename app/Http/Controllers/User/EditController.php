@@ -35,7 +35,7 @@ class EditController extends Controller
 
             $user = $userRepository->setRolesRelationship($user, $validateData['roles']);
 
-            $user->givePermissionsThroughRole();
+            // $user->givePermissionsThroughRole();
 
             if (isset($validateData['permissions']) && !empty($validateData['permissions'])) {
                 $userRepository->setPermissionsRelationship($user, $validateData['permissions']);

@@ -14,15 +14,28 @@
             <div class="img" style="width:300px;height:300px;">
                 <img src="{{ asset('img/user_') . mt_rand(1,3) . '.jpg' }}" alt="User" class="w-full h-full object-cover rounded shadow-lg">
             </div>
-            <div class="info text-right">
+            <div class="info text-right max-w-2xl">
                 <h2 class="text-xl font-semibold text-gray-700">{{ $user->name }}</h2>
                 <p class="-mt-2 text-xs text-gray-500">{{ $user->roles_string }}</p>
-                <div class="mt-6">
-                    <ul>
-                        @foreach ($user->permissions as $permission)
-                            <li class="text-sm text-gray-600">&rarr; {{ $permission->name }}</li>
-                        @endforeach
-                    </ul>
+                <div class="mt-6 text-gray-600">
+                    <div class="">
+                        <p class="text-left">Permissions role:</p>
+                        <ul>
+                            @foreach ($user->getPermissionsThroughRole() as $roleName => $permissions)
+                                <li class="text-sm text-gray-500 flex justify-between"><span class="text-gray-600 mr-2">{{ $roleName }} &rarr;</span> {{ $permissions }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @if ($user->permissions->isNotEmpty())
+                        <div class="mt-2">
+                            <p class="text-left">Additional permissions:</p>
+                            <ul>
+                                @foreach ($user->permissions as $permission)
+                                    <li class="text-sm text-gray-500">&rarr; {{ $permission->name }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

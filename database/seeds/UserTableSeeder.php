@@ -14,37 +14,41 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $dev_role = Role::where('slug','developer')->first();
-        $dev_perm = Permission::where('slug','create-tasks')->first();
-
+        $dev_role = Role::where('slug','front-developer')->first();
+        $writer_role = Role::where('slug','writer')->first();
         $manager_role = Role::where('slug', 'manager')->first();
-        $manager_perm = Permission::where('slug','edit-users')->first();
-
         $admin_role = Role::where('slug', 'admin')->first();
 
-        $developer = User::create([
+        // ADMINISTRATOR - BIGBOSS
+        $admin = User::create([
             'name' => 'Simon Pro',
             'email' => 'admin@admin.com',
             'password' => bcrypt('123123'),
         ]);
-        $developer->roles()->attach($admin_role);
-        $developer->permissions()->attach(Permission::all());
+        $admin->roles()->attach($admin_role);
 
+        // DEVELOPER
         $developer = User::create([
             'name' => 'Caleb Dev',
             'email' => 'dev@dev.com',
             'password' => bcrypt('123123'),
         ]);
         $developer->roles()->attach($dev_role);
-        $developer->permissions()->attach($dev_perm);
 
-
+        // MANAGER - BOSSHANDS
         $manager = User::create([
             'name' => 'Lily Manager',
-            'email' => 'test@test.com',
+            'email' => 'manager@manager.com',
             'password' => bcrypt('123123'),
         ]);
         $manager->roles()->attach($manager_role);
-        $manager->permissions()->attach($manager_perm);
+
+        // WRITER
+        $writer = User::create([
+            'name' => 'Andrew writer',
+            'email' => 'writer@writer.com',
+            'password' => bcrypt('123123'),
+        ]);
+        $writer->roles()->attach($writer_role);
     }
 }

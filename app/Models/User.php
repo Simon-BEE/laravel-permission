@@ -42,8 +42,13 @@ class User extends Authenticatable
      * * ATTRIBUTES
      */
 
-     public function getRolesStringAttribute()
-     {
-         return $this->roles->implode('name', ', ');
-     }
+    public function getRolesStringAttribute()
+    {
+        return $this->roles->implode('name', ', ');
+    }
+
+    public function getPermissionsThroughtRolesInStringAttribute()
+    {
+        return $this->getPermissionsThroughRole()->implode(', ');
+    }
 }

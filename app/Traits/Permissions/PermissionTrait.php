@@ -4,6 +4,7 @@ namespace App\Traits\Permissions;
 
 use App\Models\Permission;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as SupportCollection;
 
 trait PermissionTrait
 {
@@ -43,14 +44,27 @@ trait PermissionTrait
      * Give permissions to user through his role
      *
      * @param Permission $permission
-     * @return boolean
+     * @return void
      */
-    public function givePermissionsThroughRole(): bool
+    public function givePermissionsThroughRole(): void
     {
         foreach ($this->roles as $role) {
             $this->givePermissionsTo($role->permissions->pluck('slug')->toArray());
         }
-        return false;
+    }
+
+    /**
+     * Get all permissions through his roles
+     *
+     * @return SupportCollection
+     */
+    public function getPermissionsThroughRole(): SupportCollection
+    {
+        return $this->roles
+            ->mapWithKeys(function ($role){
+                return [$role->name => $role->permissions->pluck('name')->implode(', ')];
+            })
+        ;
     }
 
     /**
@@ -107,11 +121,11 @@ trait PermissionTrait
 
         if ($new) {
             $filteredPermissionsRequested = $permissionsRequested->reject(function ($permission){
-                return $this->hasPermission($permission);
+                return $this->hasPermissionTo($permission);
             });
         } else {
             $filteredPermissionsRequested = $permissionsRequested->reject(function ($permission){
-                return !$this->hasPermission($permission);
+                return !$this->hasPermissionTo($permission);
             });
         }
 
