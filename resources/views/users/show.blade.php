@@ -15,8 +15,25 @@
                 <img src="{{ asset('img/user_') . mt_rand(1,3) . '.jpg' }}" alt="User" class="w-full h-full object-cover rounded shadow-lg">
             </div>
             <div class="info text-right max-w-2xl">
-                <h2 class="text-xl font-semibold text-gray-700">{{ $user->name }}</h2>
-                <p class="-mt-2 text-xs text-gray-500">{{ $user->roles_string }}</p>
+                <div class="flex items-center justify-end">
+                    <div class="">
+                        <h2 class="text-xl font-semibold text-gray-700">{{ $user->name }}</h2>
+                        <p class="-mt-2 text-xs text-gray-500">{{ $user->roles_string }}</p>
+                    </div>
+                    <div class="icon ml-3">
+                        @if ($user->hasRoles('admin'))
+                            <span class="mdi mdi-shield-check-outline text-4xl text-green-500"></span>
+                        @elseif ($user->hasRoles('writer'))
+                            <span class="mdi mdi-pencil-circle-outline text-4xl text-green-500"></span>
+                        @elseif ($user->hasRoles('manager'))
+                            <span class="mdi mdi-clipboard-check-outline text-4xl text-green-500"></span>
+                        @elseif ($user->hasRoles('front-developer'))
+                            <span class="mdi mdi-cellphone-link text-4xl text-green-500"></span>
+                        @else
+                            <span class="mdi mdi-folder-account-outline text-4xl text-green-500"></span>
+                        @endif
+                    </div>
+                </div>
                 <div class="mt-6 text-gray-600">
                     <div class="">
                         <p class="text-left">Permissions role:</p>
